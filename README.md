@@ -89,3 +89,55 @@ Understanding flow (how to think about it)
 4. Optional: enable versioning, lifecycle, and encryption.
 
 5. Your applications/users can upload/download objects from S3.
+6. ABOUT IAM
+7. What is IAM?
+
+IAM is AWS’s service that controls who (or what) can access AWS resources and what they are allowed to do.
+
+In short: IAM = authentication (identity) + authorization (permissions).
+
+Main IAM concepts
+
+• Users: People who need access to AWS (e.g., you/your team).
+
+• Groups: Collections of users to manage permissions together.
+
+• Roles: Permissions assigned to something that assumes it (often used for EC2, Lambda, or workloads).
+
+• Policies: The permission rules (what actions are allowed/denied, on which resources).
+
+• Permissions boundary / SCP (org-level, if applicable): extra limits (more advanced, but important in real orgs).
+Policies (high-level)
+
+IAM policies are statements like:
+
+• Effect: Allow or Deny
+
+• Action: what operation is allowed (e.g., s3:ListBucket)
+
+• Resource: on which AWS resource
+
+• (optional) Condition: when/under what constraints
+
+IAM generally follows the logic: Explicit Deny overrides Allow.
+Common use cases
+
+• Give a developer access to S3 for reading/writing certain buckets
+
+• Allow EC2 instances to access other AWS services via a Role
+
+• Restrict access using least privilege (only what’s needed)
+
+Understanding flow (how it connects)
+
+1. Identify the actor: user or workload (EC2/Lambda/etc.)
+
+2. Assign the permissions using Policies
+
+3. Attach permissions via User/Group (for humans) or Role (for services/workloads)
+
+4. When someone/service tries an action, IAM checks policies:
+
+• Are you allowed to perform the action on that resource?
+
+5. If allowed → access happens; if not → access is blocked.
