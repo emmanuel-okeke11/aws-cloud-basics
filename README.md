@@ -141,3 +141,47 @@ Understanding flow (how it connects)
 • Are you allowed to perform the action on that resource?
 
 5. If allowed → access happens; if not → access is blocked.
+6. VPC
+7. What is VPC?
+
+VPC lets you create your own isolated virtual network in AWS. Inside your VPC, you control the network settings for EC2 and other resources.
+
+Think of it as: your private network environment inside AWS, where you define IP ranges, subnets, routing, and security.
+
+Main VPC components (common concepts)
+
+• VPC (the whole network): You create a VPC with a chosen IP range (CIDR block), e.g. 10.0.0.0/16.
+
+• Subnets: Portions of your VPC CIDR, usually split into:
+
+• Public subnets (typically have a route to an Internet Gateway)
+
+• Private subnets (no direct route to the internet by default)
+
+• Route tables: Rules that decide where traffic goes next (e.g., to Internet Gateway, NAT Gateway, or internal routing).
+• Internet Gateway (IGW): Enables internet access for resources in public subnets.
+
+• NAT Gateway: Lets resources in private subnets access the internet outbound (but not accept inbound connections).
+
+• Security Groups / NACLs (security controls):
+
+• Security Groups: stateful firewall rules attached to instances
+
+• Network ACLs: stateless rules at the subnet level (more “network-level filtering”)
+
+Understanding flow (how to think about it)
+
+1. Create a VPC with your IP range (CIDR).
+
+2. Divide it into subnets (public/private depending on your needs).
+
+3. Associate route tables to those subnets:
+
+• Public subnet → route to IGW
+• Private subnet → route to NAT Gateway (for outbound internet) or keep internal-only
+
+4. Launch resources (e.g., EC2) in the appropriate subnets.
+
+5. Control traffic using Security Groups and/or NACLs.
+
+In one line: VPC defines your isolated network in AWS; subnets + routing decide connectivity; security rules decide who can talk to what.
